@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { json } = require('express/lib/response');
+// const { json } = require('express/lib/response');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const res = require('express/lib/response');
+// const res = require('express/lib/response');
 // User:
 // PASS:
 
@@ -29,7 +29,7 @@ function verifyJWT (req,res,next){
     if(!authHeader){
         return res.status(401).send({message:"UnAuthirized access"})
     }
-    const token =authHeader.split(' ')[1];
+    const token = authHeader.split(' ')[1];
     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,function(err, decoded){
         if(err){
             return res.status(403).send({messade:'Forbidden access'})
@@ -125,6 +125,10 @@ async function run() {
         })
 
         // User Collection
+        app.get('/user',  verifyJWT, async(req,res)=>{
+            const users = await userCollection.find().toArray();
+            res.send(users);
+        })
         app.put ('/user/:email', async(req, res)=>{
             const email = req.params.email;
             const user = req.body;
