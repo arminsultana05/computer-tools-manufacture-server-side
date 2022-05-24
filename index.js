@@ -192,7 +192,7 @@ async function run() {
           // get add task data by post
           app.post('/review', async (req, res) => {
             const newTask = req.body;
-            const result = await reviewCollection(newTask);
+            const result = await reviewCollection.insertOne(newTask);
             res.send(result);
           });
 
