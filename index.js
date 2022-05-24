@@ -49,6 +49,7 @@ async function run() {
             ("productCollection");
         const orderCollection = client.db("computerManufacturer").collection("orderCollection")
         const userCollection = client.db("computerManufacturer").collection("user")
+        const reviewCollection = client.db("computerManufacturer").collection("review")
         app.get('/products', async (req, res) => {
             const query = {};
             const cursor = productsCollection.find(query);
@@ -101,6 +102,12 @@ async function run() {
             }
         })
         // OrderCollection
+        app.get('/orderCollection',  async (req, res) => {
+            const query = {};
+            const cursor = orderCollection.find(query);
+            const products = await cursor.toArray();
+            res.send(products);
+        })
         app.post('/orderCollection', async (req, res) => {
             const orders = req.body;
             const result = await orderCollection.insertOne(orders);
@@ -135,6 +142,12 @@ async function run() {
             const users = await userCollection.find().toArray();
             res.send(users);
         })
+        app.post('/user', async (req, res) => {
+            const orders = req.body;
+            const result = await userCollection.insertOne(orders);
+            res.send(result)
+
+        })
         app.put('/user/admin/:email', async (req, res) => {
             const email = req.params.email;
             const filter = { email: email };
@@ -159,6 +172,29 @@ async function run() {
             const token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
             res.send({ result, token })
         })
+
+        // ReviewCollection...
+        app.get('/review', async (req, res) => {
+            const query = {};
+            const cursor = reviewCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+          });
+      
+          // read task by single id
+          app.get('/review/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await reviewCollection.findOne(query);
+            res.send(result);
+          });
+      
+          // get add task data by post
+          app.post('/review', async (req, res) => {
+            const newTask = req.body;
+            const result = await reviewCollection(newTask);
+            res.send(result);
+          });
 
 
     }
