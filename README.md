@@ -1,18 +1,54 @@
-# Getting Started with Create React App
+# COMPUTER PARTS/TOOLS MANUFACTURER WEBSITE
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## FEATURES OF THE PROJECT
+* Used Google and email authentication.
+* The user send reset password verification.
+* Clicking on Inventory item any button on the homepage will take you to the privet route page.
+* You have Reduce and Increase  Your Product Qantity and order the product.
+* And you will see your ordered product on My Order page
+* And used .env file with gitignore
+* Used data Mongodb Database
+* Used Nested Routes In Dashbord
+* Payment method used
+* JWT Token have been used
 
-In the project directory, you can run:
+## Technologies:
+* Used React Router.
+* React Library.
+* Tailwind Css.
+* Firebase Authentication.
+* React Firebase Hook Library.
+* React Toastyfy
+* React Form
 
-### `npm start`
+## BackEnd Technology:
+* Used Heroku.com
+* Used .env file for Token acces and userId and password.
+* Mongodb Atlast.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Pages:
+* Home Page.
+* Dashbord Page.
+* Blogs page .
+* About me page.
+* Login page.
+* SignIn page.
+* 404 page.
+## Admin Pages
+* Manage All Orders Page.
+* Add A Product Page.
+* Make Admin Page.
+* Manage Product Page.
+## User Pages
+* User Orders Page.
+* User Review Page.
+* User Profile
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Description Of this Project
+* The specialty of this website, This website has Home Page (Navbar, Banner , 6th Inventory Items,Footer And Exta Two Section and login Sign Authentication).
+* If the user clicks on the button of any Purches And the user will go on a private route. And if the user wants, he can reduce or increase the quantity of the product there,And the user can order the product according to that quantity.And the user will be able to see his ordered product in My Order page.Admin and payment method has been applied in the dashboard in this website.If the user wants, he can leave a review on the review page.
 
 ### `npm test`
 

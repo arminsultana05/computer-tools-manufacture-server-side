@@ -138,7 +138,7 @@ async function run() {
         })
 
         // User Collection
-        app.get('/user', verifyJWT, async (req, res) => {
+        app.get('/user',  async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users);
         })
@@ -181,7 +181,7 @@ async function run() {
             res.send(result);
           });
       
-          // read task by single id
+          // read task by single 
           app.get('/review/:id', async (req, res) => {
             const id = req.params.id;
             const query = {_id:ObjectId(id)};
