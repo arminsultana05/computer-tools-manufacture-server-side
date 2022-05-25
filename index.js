@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require ('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
@@ -69,7 +69,7 @@ async function run() {
         app.delete('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await  productsCollection.deleteOne(query);
+            const result = await productsCollection.deleteOne(query);
             res.send(result);
         })
         app.put('/products/update/:id', verifyJWT, async (req, res) => {
@@ -95,9 +95,6 @@ async function run() {
         //     res.send({clientSecret:paymentIntent.client_secret})
         // })
 
-
-
-
         app.put('/api/products/stock/:id', async (req, res) => {
             const id = req.params.id;
             const quantity = req.body.qty.qty;
@@ -114,7 +111,7 @@ async function run() {
             }
         })
         // OrderCollection
-        app.get('/orderCollection',  async (req, res) => {
+        app.get('/orderCollection', async (req, res) => {
             const query = {};
             const cursor = orderCollection.find(query);
             const products = await cursor.toArray();
@@ -142,11 +139,11 @@ async function run() {
             }
 
         })
-        app.get('/orderCollection/:id', async(req, res)=>{
-            const id =req.params.id;
-            const query = {_id:ObjectId(id)};
+        app.get('/orderCollection/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
             const order = await orderCollection.findOne(query);
-            res.send(order); 
+            res.send(order);
         })
         app.delete('/orderCollection/:id', async (req, res) => {
             const id = req.params.id;
@@ -156,7 +153,7 @@ async function run() {
         })
 
         // User Collection
-        app.get('/user',  async (req, res) => {
+        app.get('/user', async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users);
         })
@@ -166,7 +163,7 @@ async function run() {
             res.send(result)
 
         })
-        
+
         app.put('/user/admin/:email', async (req, res) => {
             const email = req.params.email;
             const filter = { email: email };
@@ -178,12 +175,12 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/admin/:email', async (req , res)=>{
-            const email =req .params.email;
-            const user = await userCollection.findOne({email:email});
+        app.get('/admin/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = await userCollection.findOne({ email: email });
             const isAdmin = user?.role === "admin";
-            
-            res.send({admin:isAdmin});
+
+            res.send({ admin: isAdmin });
         })
 
         app.put('/user/:email', async (req, res) => {
@@ -206,22 +203,22 @@ async function run() {
             const cursor = reviewCollection.find(query);
             const result = await cursor.toArray();
             res.send(result);
-          });
-      
-          // read task by single 
-          app.get('/review/:id', async (req, res) => {
+        });
+
+        // read task by single 
+        app.get('/review/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id:ObjectId(id)};
+            const query = { _id: ObjectId(id) };
             const result = await reviewCollection.findOne(query);
             res.send(result);
-          });
-      
-          // get add task data by post
-          app.post('/review', async (req, res) => {
+        });
+
+        // get add task data by post
+        app.post('/review', async (req, res) => {
             const newTask = req.body;
             const result = await reviewCollection.insertOne(newTask);
             res.send(result);
-          });
+        });
 
 
     }
