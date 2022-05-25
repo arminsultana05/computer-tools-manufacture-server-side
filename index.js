@@ -1,11 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-// const { json } = require('express/lib/response');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-// const res = require('express/lib/response');
-// User:
-// PASS:
+
+
 
 require("dotenv").config();
 const port = process.env.PORT || 5000
@@ -73,7 +72,7 @@ async function run() {
             const result = await  productsCollection.deleteOne(query);
             res.send(result);
         })
-        app.put('/products/update/:id', async (req, res) => {
+        app.put('/products/update/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const product = await productsCollection.findOne({ _id: ObjectId(id) })
             console.log(product);
@@ -82,6 +81,19 @@ async function run() {
             const result = await productsCollection.updateOne({ _id: ObjectId(id) }, { $set: { qty: quantity } });
             res.send(result);
         })
+
+        // app.post('/create-payment-intent', async(req, res)=>{
+        //     const service = req.body;
+        //     const price = service.price;
+        //     const amount =price*100;
+        //     const paymentIntent = await stripe.paymentIntents.create({
+        //         amount: amount,
+        //         currency :'usd',
+        //         payment_method_types:['card']
+
+        //     })
+        //     res.send({clientSecret:paymentIntent.client_secret})
+        // })
 
 
 
@@ -130,6 +142,12 @@ async function run() {
             }
 
         })
+        app.get('/orderCollection/:id', async(req, res)=>{
+            const id =req.params.id;
+            const query = {_id:ObjectId(id)};
+            const order = await orderCollection.findOne(query);
+            res.send(order); 
+        })
         app.delete('/orderCollection/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -138,7 +156,7 @@ async function run() {
         })
 
         // User Collection
-        app.get('/user', async (req, res) => {
+        app.get('/user',  async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users);
         })
@@ -148,15 +166,24 @@ async function run() {
             res.send(result)
 
         })
+        
         app.put('/user/admin/:email', async (req, res) => {
             const email = req.params.email;
             const filter = { email: email };
             const updateDoc = {
 
-                $set: { role: 'admin' }
+                $set: { role: "admin" }
             };
             const result = await userCollection.updateOne(filter, updateDoc);
             res.send(result)
+        })
+
+        app.get('/admin/:email', async (req , res)=>{
+            const email =req .params.email;
+            const user = await userCollection.findOne({email:email});
+            const isAdmin = user?.role === "admin";
+            
+            res.send({admin:isAdmin});
         })
 
         app.put('/user/:email', async (req, res) => {
