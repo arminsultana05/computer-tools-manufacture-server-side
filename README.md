@@ -1,6 +1,6 @@
 # COMPUTER PARTS/TOOLS MANUFACTURER WEBSITE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+COMPUTER PARTS/TOOLS MANUFACTURER WEBSITE [Website Link](https://assignment12-client-side.web.app/about).
 
 ## FEATURES OF THE PROJECT
 * Used Google and email authentication.
